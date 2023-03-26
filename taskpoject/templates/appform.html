@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="formaction">
+            <form action=""  >
+                {% csrf_token %}
+             <div class="row" >
+                 <h4 style="text-align:center">APPLICATION FORM</h4>
+             </div>
+             <div class="row">
+                 <div class="label">
+                    <label>Name:</label><br>
+             <div class="input" >
+                 <input type="text" name="name" id="name" placeholder="Enter full name" required>
+             </div>
+                 </div>
+             </div><br>
+
+              <div class="row" >
+                <div class="label" >
+                    <label>DOB:</label>
+                </div>
+                <div class="input" >
+                    <input type="date" name="dob" placeholder="Enter date of birth">
+                </div>
+              </div><br>
+
+            <div class="row">
+                <div class="label">
+                   <label>Age:</label>
+                </div>
+                <div class="input">
+                   <input type="text" name="age" placeholder="Enter age" required>
+                </div>
+            </div><br>
+
+           <div class="row">
+               <div class="label">
+                   <label>Address</label>
+               </div>
+               <div class="input">
+                 <input type="text" name="address" placeholder="Enter address" required>
+               </div>
+           </div><br>
+
+           <div class="row" >
+               <div class="label">
+                  <label>Email</label>
+               </div>
+               <div class="input">
+                   <input type="email" name="email" id="email" placeholder="Enter email" required>
+               </div>
+           </div><br>
+
+           <div class="row" >
+               <div class="label">
+                  <label>Phone</label>
+               </div>
+               <div class="input">
+                   <input type="text" name="phone" placeholder="Enter phone number" required>
+               </div>
+           </div><br>
+
+            <div class="row" >
+               <div class="label">
+                 <label>Gender:</label>
+               </div>
+               <div class="input">
+                    <input type="radio" name="gender">Male
+                    <input type="radio" name="gender">Female
+               </div>
+            </div><br>
+
+             <div class="row" >
+               <div class="label">
+                   <label>District: </label>
+               </div>
+               <div class="input" >
+                   <select name="district" id="district">
+                   <option value="" selected="selected">Select district</option>
+                   </select>
+               </div>
+             </div><br>
+
+              <div class="row" >
+               <div class="label">
+                   <label>Branch: </label>
+               </div>
+               <div class="input" >
+                   <select name="branch" id="branch">
+                       <option value="" selected="selected">Please select district first</option>
+                   </select>
+               </div>
+              </div><br>
+
+               <div class="row" >
+               <div class="label">
+                    <label>Account type:</label>
+               </div>
+               <div class="input">
+                    <select name="accounttype">
+                     <option value="savings">Savings</option>
+                     <option value="current">Current</option>
+                     <option value="fixed" >Fixed</option>
+                     <option value="salary">Salary</option>
+                   </select>
+               </div></div>
+               <br>
+
+                <div class="row" >
+               <div class="label">
+                     <label>Materials Provide:</label>
+               </div>
+                <div class="input">
+                    <input type="checkbox" id="material1" name="material1" >
+                    <label for="material1"> Credit card</label>
+                    <input type="checkbox" id="material2" name="material2" >
+                    <label for="material2"> Debit card</label>
+                    <input type="checkbox" id="material3" name="material3" >
+                    <label for="material3">Check book</label>
+                </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="vertical-center">
+                        <input type="Submit" name="submit"  id="onClick" value="Submit">
+                    </div>
+                </div><br>
+
+                <div class="row">
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+                </div><br>
+
+             <div class="row">
+                    <div class="vertical-center">
+                        <button type="button" ><a href="logout">Logout</a></button>
+                    </div>
+             </div><br>
+</form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+var districtObject = {
+  "Ernakulam": {"Edapally": [],
+                "Kochi": [],
+                "Vytila": []
+               },
+  "Kottayam": {"Changanacherry": [],
+               "Ettumannor": [],
+              "Chingavanam":[]
+              }
+}
+window.onload = function() {
+  var districtSel = document.getElementById("district");
+  var branchSel = document.getElementById("branch");
+  for (var x in districtObject) {
+    districtSel.options[districtSel.options.length] = new Option(x, x);
+  }
+  districtSel.onchange = function() {
+    branchSel.length = 1;
+    for (var y in districtObject[this.value]) {
+      branchSel.options[branchSel.options.length] = new Option(y, y);
+    }
+  }
+
+}
+</script>
+<script>
+document.getElementById("onClick").addEventListener("click", function() {
+    const name = document.getElementById('name').value;
+    if(name === '') {
+      alert('Application not accepted');
+    }else{
+      alert("Application accepted");
+    }
+});
+</script>
+
+{% endblock %}
